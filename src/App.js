@@ -10,7 +10,7 @@ function App() {
     try {
       const res = await fetch('https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json');
       const data = await res.json();
-      console.log(data)
+      // console.log(data)
       setValues(data);
     } catch (error) {
       console.error(error);
@@ -40,7 +40,7 @@ function App() {
 
   return (
     <div>
-      <h1>Emoloyee Data Table</h1>
+      <h1>Employee Data Table</h1>
       <table style={{width:'100%'}}>
         <tr style={{background:'#D6EEEE'}}>
           <th>ID</th>
