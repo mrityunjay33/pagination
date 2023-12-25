@@ -13,7 +13,7 @@ function App() {
       // console.log(data)
       setValues(data);
     } catch (error) {
-      console.error(error);
+      alert("failed to fetch data");
       return [];
     }
   }
@@ -57,7 +57,7 @@ function App() {
       </table>
       
       <ul className='pagination'>
-      <button onClick={handlePrev}>Prev</button>
+      <button onClick={handlePrev}>Previous</button>
         {Array.from({length: Math.ceil(values.length/itemsPerPage)}, (_, i) => 
         <li onClick={() => pagination(i+1)} className={currentPage === i+1 ? 'active' : ''}>{i+1}</li>
         )}
