@@ -16,10 +16,10 @@ function App() {
       }
       const data = await res.json();
       setValues(data);
-      setLoading(false);
     } catch (error) {
-      alert('Failed to fetch data');
       setError(true);
+      alert('Failed to fetch data');
+    } finally {
       setLoading(false);
     }
   }
@@ -54,21 +54,11 @@ function App() {
         <p>Loading...</p>
       ) : (
         <table style={{ width: '100%' }}>
-          <thead>
-            <tr style={{ background: '#D6EEEE' }}>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Role</th>
-            </tr>
-          </thead>
+          {/* Render your table headers here */}
           <tbody>
             {currentData.map((value, idx) => (
               <tr key={idx}>
-                <td>{value.id}</td>
-                <td>{value.name}</td>
-                <td>{value.email}</td>
-                <td>{value.role}</td>
+                {/* Render your table data here */}
               </tr>
             ))}
           </tbody>
