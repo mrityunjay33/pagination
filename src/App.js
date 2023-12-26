@@ -54,11 +54,21 @@ function App() {
         <p>Loading...</p>
       ) : (
         <table style={{ width: '100%' }}>
-          {/* Render your table headers here */}
+          <thead>
+            <tr style={{ background: '#D6EEEE' }}>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+            </tr>
+          </thead>
           <tbody>
             {currentData.map((value, idx) => (
               <tr key={idx}>
-                {/* Render your table data here */}
+                <td>{value.id}</td>
+                <td>{value.name}</td>
+                <td>{value.email}</td>
+                <td>{value.role}</td>
               </tr>
             ))}
           </tbody>
