@@ -5,6 +5,8 @@ function App() {
   const [values, setValues] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   const fetchData = async () => {
     try {
@@ -14,15 +16,17 @@ function App() {
       }
       const data = await res.json();
       setValues(data);
+      setLoading(false);
     } catch (error) {
-      alert(error.message);
-      return [];
+      alert('Failed to fetch data');
+      setError(true);
+      setLoading(false);
     }
   }
 
-  useEffect(() =>{
+  useEffect(() => {
     fetchData();
-  },[]);
+  }, []);
 
   const pagination = (index) => {
     setCurrentPage(index);
@@ -32,7 +36,7 @@ function App() {
     const count = Math.ceil(values.length / itemsPerPage);
     if (currentPage < count) setCurrentPage(prev => prev + 1);
   }
-
+  
   const handlePrev = () => {
     if (currentPage > 1) setCurrentPage(prev => prev - 1);
   }
@@ -44,33 +48,40 @@ function App() {
   return (
     <div>
       <h1>Employee Data Table</h1>
-      <table style={{ width: '100%' }}>
-        <thead>
-          <tr style={{ background: '#D6EEEE' }}>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentData.map((value, idx) => (
-            <tr key={idx}>
-              <td>{value.id}</td>
-              <td>{value.name}</td>
-              <td>{value.email}</td>
-              <td>{value.role}</td>
+      {error ? (
+        <p>Error: Failed to fetch data</p>
+      ) : loading ? (
+        <p>Loading...</p>
+      ) : (
+        <table style={{ width: '100%' }}>
+          <thead>
+            <tr style={{ background: '#D6EEEE' }}>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
+          </thead>
+          <tbody>
+            {currentData.map((value, idx) => (
+              <tr key={idx}>
+                <td>{value.id}</td>
+                <td>{value.name}</td>
+                <td>{value.email}</td>
+                <td>{value.role}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
       <ul className='pagination'>
-        <button onClick={handlePrev} disabled={currentPage === 1}>Previous</button>
+        <button onClick={handlePrev}>Previous</button>
         {Array.from({ length: Math.ceil(values.length / itemsPerPage) }, (_, i) => (
-          <li key={i} onClick={() => pagination(i + 1)} className={currentPage === i + 1 ? 'active' : ''}>{i + 1}</li>
+          <li key={i} onClick={() => pagination(i + 1)} className={currentPage === i + 1 ? 'active' : ''}>
+            {i + 1}
+          </li>
         ))}
-        <button onClick={handleNext} disabled={currentPage === Math.ceil(values.length / itemsPerPage)}>Next</button>
+        <button onClick={handleNext}>Next</button>
       </ul>
     </div>
   );
